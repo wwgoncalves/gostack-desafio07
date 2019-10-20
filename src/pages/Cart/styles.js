@@ -49,6 +49,7 @@ export const ItemDescription = styled.View`
   flex-direction: column;
   justify-content: center;
   width: 170px;
+  margin-left: 10px;
 `;
 export const ItemName = styled.Text.attrs({
   numberOfLines: 3,
@@ -63,7 +64,9 @@ export const DeleteForeverIcon = styled(Icon).attrs({
   name: 'delete-forever',
   color: '#7159c1',
   size: 24,
-})``;
+})`
+  padding: 5px;
+`;
 
 export const ItemFooter = styled.View`
   flex-direction: row;
@@ -71,7 +74,6 @@ export const ItemFooter = styled.View`
   align-items: center;
   background-color: #eee;
   border-radius: 4px;
-  padding: 5px 10px;
 `;
 export const AmountContainer = styled.View`
   flex-direction: row;
@@ -82,7 +84,7 @@ export const RemoveCircleOutlineIcon = styled(Icon).attrs({
   color: '#7159c1',
   size: 20,
 })`
-  margin-right: 5px;
+  padding: 10px;
 `;
 export const ItemAmount = styled.TextInput.attrs({
   editable: false,
@@ -99,11 +101,12 @@ export const AddCircleOutlineIcon = styled(Icon).attrs({
   color: '#7159c1',
   size: 20,
 })`
-  margin-left: 5px;
+  padding: 10px;
 `;
 export const Subtotal = styled.Text`
   font-size: 16px;
   font-weight: bold;
+  margin-right: 10px;
 `;
 
 export const GrandTotalLabel = styled.Text`
@@ -133,3 +136,5 @@ export const ActionText = styled.Text`
   color: #fff;
   text-transform: uppercase;
 `;
+
+export const Button = styled(RectButton)``;

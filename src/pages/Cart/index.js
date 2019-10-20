@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as CartActions from '../../store/modules/cart/actions';
+import { formatPrice } from '../../util/format';
 
 import {
   Container,
@@ -26,6 +27,7 @@ import {
   GrandTotalPrice,
   CheckoutButton,
   ActionText,
+  Button,
 } from './styles';
 
 function Cart({ cart, total }) {
@@ -42,13 +44,19 @@ function Cart({ cart, total }) {
                     <ItemName>{product.title}</ItemName>
                     <ItemPrice>{product.price}</ItemPrice>
                   </ItemDescription>
-                  <DeleteForeverIcon />
+                  <Button>
+                    <DeleteForeverIcon />
+                  </Button>
                 </ItemHeader>
                 <ItemFooter>
                   <AmountContainer>
-                    <RemoveCircleOutlineIcon />
+                    <Button>
+                      <RemoveCircleOutlineIcon />
+                    </Button>
                     <ItemAmount>{product.amount}</ItemAmount>
-                    <AddCircleOutlineIcon />
+                    <Button>
+                      <AddCircleOutlineIcon />
+                    </Button>
                   </AmountContainer>
                   <Subtotal>{product.price}</Subtotal>
                 </ItemFooter>
@@ -74,9 +82,11 @@ function Cart({ cart, total }) {
 
 const mapStateToProps = state => ({
   cart: state.cart,
-  total: state.cart.reduce((total, product) => {
-    return total + product.price * product.amount;
-  }, 0),
+  total: formatPrice(
+    state.cart.reduce((total, product) => {
+      return total + product.price * product.amount;
+    }, 0)
+  ),
 });
 
 const mapDispatchToProps = dispatch =>
