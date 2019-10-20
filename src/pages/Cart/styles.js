@@ -51,7 +51,7 @@ export const ItemDescription = styled.View`
   width: 170px;
 `;
 export const ItemName = styled.Text.attrs({
-  numberOfLines: 2,
+  numberOfLines: 3,
 })`
   font-size: 14px;
 `;
