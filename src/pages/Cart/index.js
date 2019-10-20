@@ -30,7 +30,19 @@ import {
   Button,
 } from './styles';
 
-function Cart({ cart, total, removeFromCart }) {
+function Cart({ cart, total, removeFromCart, updateAmount }) {
+  function incrementAmount(product) {
+    const { id, amount } = product;
+
+    updateAmount(id, amount + 1);
+  }
+
+  function decrementAmount(product) {
+    const { id, amount } = product;
+
+    updateAmount(id, amount - 1);
+  }
+
   return (
     <Container>
       <ScrollableContainer>
@@ -42,7 +54,7 @@ function Cart({ cart, total, removeFromCart }) {
                   <ItemImage source={{ uri: product.image }} />
                   <ItemDescription>
                     <ItemName>{product.title}</ItemName>
-                    <ItemPrice>{product.price}</ItemPrice>
+                    <ItemPrice>{product.formattedPrice}</ItemPrice>
                   </ItemDescription>
                   <Button>
                     <DeleteForeverIcon
@@ -53,14 +65,18 @@ function Cart({ cart, total, removeFromCart }) {
                 <ItemFooter>
                   <AmountContainer>
                     <Button>
-                      <RemoveCircleOutlineIcon />
+                      <RemoveCircleOutlineIcon
+                        onPress={() => decrementAmount(product)}
+                      />
                     </Button>
                     <ItemAmount>{product.amount}</ItemAmount>
                     <Button>
-                      <AddCircleOutlineIcon />
+                      <AddCircleOutlineIcon
+                        onPress={() => incrementAmount(product)}
+                      />
                     </Button>
                   </AmountContainer>
-                  <Subtotal>{product.price}</Subtotal>
+                  <Subtotal>{product.subtotal}</Subtotal>
                 </ItemFooter>
               </CartItem>
             ))}
@@ -83,7 +99,10 @@ function Cart({ cart, total, removeFromCart }) {
 }
 
 const mapStateToProps = state => ({
-  cart: state.cart,
+  cart: state.cart.map(product => ({
+    ...product,
+    subtotal: formatPrice(product.price * product.amount),
+  })),
   total: formatPrice(
     state.cart.reduce((total, product) => {
       return total + product.price * product.amount;
