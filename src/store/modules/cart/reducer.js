@@ -7,6 +7,16 @@ export default function cart(state = [], action) {
       };
       return [...state, product];
     }
+    case '@cart/REMOVE': {
+      const stateCopy = [...state];
+      const productIndex = stateCopy.findIndex(
+        product => product.id === action.id
+      );
+      if (productIndex >= 0) {
+        stateCopy.splice(productIndex, 1);
+      }
+      return stateCopy;
+    }
     default:
       return state;
   }

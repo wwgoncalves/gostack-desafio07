@@ -30,7 +30,7 @@ import {
   Button,
 } from './styles';
 
-function Cart({ cart, total }) {
+function Cart({ cart, total, removeFromCart }) {
   return (
     <Container>
       <ScrollableContainer>
@@ -45,7 +45,9 @@ function Cart({ cart, total }) {
                     <ItemPrice>{product.price}</ItemPrice>
                   </ItemDescription>
                   <Button>
-                    <DeleteForeverIcon />
+                    <DeleteForeverIcon
+                      onPress={() => removeFromCart(product.id)}
+                    />
                   </Button>
                 </ItemHeader>
                 <ItemFooter>
