@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-// import { ActivityIndicator } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as CartActions from '../../store/modules/cart/actions';
 
 import api from '../../services/api';
 import { formatPrice } from '../../util/format';
@@ -19,7 +22,7 @@ import {
   ActionText,
 } from './styles';
 
-export default class Main extends Component {
+class Main extends Component {
   state = {
     products: [],
     loading: true,
@@ -43,8 +46,15 @@ export default class Main extends Component {
     });
   }
 
+  handleAddProductToCart = product => {
+    const { addToCart } = this.props;
+
+    addToCart(product);
+  };
+
   render() {
     const { products, loading } = this.state;
+    const { amount } = this.props;
     return (
       <Container>
         {loading ? (
@@ -58,10 +68,10 @@ export default class Main extends Component {
                 <ProductImage source={{ uri: item.image }} />
                 <ProductTitle>{item.title}</ProductTitle>
                 <ProductPrice>{item.formattedPrice}</ProductPrice>
-                <AddButton>
+                <AddButton onPress={() => this.handleAddProductToCart(item)}>
                   <AmountContainer>
                     <AddShoppingCartIcon />
-                    <AmountText>3</AmountText>
+                    <AmountText>{amount[item.id] || 0}</AmountText>
                   </AmountContainer>
                   <ActionText>ADD TO CART</ActionText>
                 </AddButton>
@@ -73,3 +83,20 @@ export default class Main extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  amount: state.cart.reduce((amount, product) => {
+    // eslint-disable-next-line no-param-reassign
+    amount[product.id] = product.amount;
+
+    return amount;
+  }, {}),
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Main);
