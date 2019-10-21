@@ -1,14 +1,7 @@
-import { formatPrice } from '../../../util/format';
-
 export default function cart(state = [], action) {
   switch (action.type) {
-    case '@cart/ADD': {
-      const product = {
-        ...action.product,
-        amount: 1,
-        formattedPrice: formatPrice(action.product.price),
-      };
-      return [...state, product];
+    case '@cart/ADD_SUCCESS': {
+      return [...state, action.product];
     }
     case '@cart/REMOVE': {
       const productIndex = state.findIndex(product => product.id === action.id);

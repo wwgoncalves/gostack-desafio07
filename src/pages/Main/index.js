@@ -46,13 +46,13 @@ class Main extends Component {
     });
   }
 
-  handleAddProductToCart = product => {
-    const { addToCart, amount, updateAmount } = this.props;
+  handleAddProductToCart = id => {
+    const { addToCartRequest, amount, updateAmount } = this.props;
 
-    if (amount[product.id] > 0) {
-      updateAmount(product.id, amount[product.id] + 1);
+    if (amount[id] > 0) {
+      updateAmount(id, amount[id] + 1);
     } else {
-      addToCart(product);
+      addToCartRequest(id);
     }
   };
 
@@ -72,7 +72,7 @@ class Main extends Component {
                 <ProductImage source={{ uri: item.image }} />
                 <ProductTitle>{item.title}</ProductTitle>
                 <ProductPrice>{item.formattedPrice}</ProductPrice>
-                <AddButton onPress={() => this.handleAddProductToCart(item)}>
+                <AddButton onPress={() => this.handleAddProductToCart(item.id)}>
                   <AmountContainer>
                     <AddShoppingCartIcon />
                     <AmountText>{amount[item.id] || 0}</AmountText>
