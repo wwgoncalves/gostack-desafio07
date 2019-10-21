@@ -30,17 +30,17 @@ import {
   Button,
 } from './styles';
 
-function Cart({ cart, total, removeFromCart, updateAmount }) {
+function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
   function incrementAmount(product) {
     const { id, amount } = product;
 
-    updateAmount(id, amount + 1);
+    updateAmountRequest(id, amount + 1);
   }
 
   function decrementAmount(product) {
     const { id, amount } = product;
 
-    updateAmount(id, amount - 1);
+    updateAmountRequest(id, amount - 1);
   }
 
   return (

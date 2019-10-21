@@ -47,13 +47,8 @@ class Main extends Component {
   }
 
   handleAddProductToCart = id => {
-    const { addToCartRequest, amount, updateAmount } = this.props;
-
-    if (amount[id] > 0) {
-      updateAmount(id, amount[id] + 1);
-    } else {
-      addToCartRequest(id);
-    }
+    const { addToCartRequest } = this.props;
+    addToCartRequest(id);
   };
 
   render() {

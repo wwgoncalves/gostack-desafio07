@@ -15,7 +15,7 @@ export default function cart(state = [], action) {
 
       return state;
     }
-    case '@cart/UPDATE_AMOUNT': {
+    case '@cart/UPDATE_AMOUNT_SUCCESS': {
       if (action.amount <= 0) {
         return state;
       }
