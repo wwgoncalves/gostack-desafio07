@@ -1,9 +1,11 @@
 import { select, call, put, all, takeLatest } from 'redux-saga/effects';
 import { Alert } from 'react-native';
 
-import { updateAmountSuccess, addToCartSuccess } from './actions';
-import api from '../../../services/api';
 import { formatPrice } from '../../../util/format';
+import { updateAmountSuccess, addToCartSuccess } from './actions';
+
+import api from '../../../services/api';
+import navigation from '../../../services/navigation';
 
 function* addToCart({ id }) {
   const productExists = yield select(state =>
@@ -34,6 +36,8 @@ function* addToCart({ id }) {
     };
 
     yield put(addToCartSuccess(productData));
+
+    navigation.navigate('Cart');
   }
 }
 
